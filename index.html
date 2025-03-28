@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simple Antivirus Simulation">
+    <title>Antivirus Simulation</title>
+    <style>
+        /* Basic styles for the antivirus simulation interface */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .status {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 30px;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0%;
+            transition: width 2s ease-in-out;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            background-color: #2ecc71;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        .result {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Antivirus Simulation</h1>
+        <div class="status">Click below to start scanning...</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <button onclick="startScan()">Start Scan</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function startScan() {
+            document.getElementById('result').innerHTML = "";
+            document.querySelector('.status').innerHTML = "Scanning files...";
+
+            // Simulate scanning process
+            let progress = 0;
+            let progressBar = document.getElementById('progressBar');
+
+            let interval = setInterval(() => {
+                if (progress < 100) {
+                    progress += 10;
+                    progressBar.style.width = progress + "%";
+                } else {
+                    clearInterval(interval);
+                    completeScan();
+                }
+            }, 500); // Progress increases every 500ms
+
+        }
+
+        function completeScan() {
+            // Simulate scan results
+            let resultText = "Scan complete. All files are clean!";
+            let resultClass = "result-clean";
+
+            // Randomly simulate a virus detection
+            if (Math.random() < 0.3) { // 30% chance of finding a virus
+                resultText = "Virus detected! Quarantine initiated.";
+                resultClass = "result-virus";
+            }
+
+            // Update the status with the scan result
+            document.querySelector('.status').innerHTML = resultText;
+            document.getElementById('result').innerHTML = resultText;
+            document.getElementById('result').classList.add(resultClass);
+        }
+    </script>
+
+</body>
+</html>
